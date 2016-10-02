@@ -2,10 +2,12 @@
 #r "./packages/FAKE/tools/FakeLib.dll"
 
 open Fake
+open System
 
 // Directories
 let buildDir  = "./build/"
 let deployDir = "./deploy/"
+let portNumber = 8901
 
 
 // Filesets
@@ -32,6 +34,21 @@ Target "Deploy" (fun _ ->
     -- "*.zip"
     |> Zip buildDir (deployDir + "ApplicationName." + version + ".zip")
 )
+
+Target "Run" (fun _ -> 
+    let timeOut = TimeSpan.FromMinutes 3.0
+    let procInf (info:Diagnostics.ProcessStartInfo) =
+        info.FileName <- buildDir </> "redfedora.exe"
+        info.Arguments <- portNumber.ToString()
+    let res = ExecProcess procInf timeOut
+    let startPage = sprintf "http://127.0.0.1:%d" portNumber 
+    Diagnostics.Process.Start(startPage) |> ignore
+    ()
+)
+    
+
+"Build" ==> "Run"
+
 
 // Build order
 "Clean"

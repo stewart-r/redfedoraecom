@@ -12,8 +12,8 @@ open System.IO
 
 [<EntryPoint>]
 let main [| port |] =
-    let localHome = @"C:\Users\stewa_000\Source\Repos\SlAccount\.build\webserver\output"
-    let remoteHome = @"D:\home\site\wwwroot\output"
+    let localHome = Directory.GetCurrentDirectory() + @"\build\app\"
+    let remoteHome = @"D:\home\site\wwwroot\app\"
     let home = 
         if (not (Directory.Exists remoteHome))
         then localHome
@@ -29,9 +29,9 @@ let main [| port |] =
     let app : WebPart =
         choose [
             Filters.GET >=> choose [ 
-                    Filters.path "/" >=> Files.file "output/index.html"
+                    Filters.path "/" >=> Files.file "index.html"
                     Files.browseHome  ]
-            RequestErrors.NOT_FOUND "Grr - Page not found." 
+            RequestErrors.NOT_FOUND localHome
             ]
     startWebServer config app
     0 // return an integer exit code
