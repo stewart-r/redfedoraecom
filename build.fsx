@@ -18,13 +18,17 @@ let appReferences  =
 // version info
 let version = "0.1"  // or retrieve from CI server
 
+let copyAppFolder () =
+    System.IO.File.WriteAllText(@"C:\temp\" + Guid.NewGuid().ToString(),DateTime.Now.ToString())
+    CopyDir  (buildDir </> "app") ("redfedora" </> "app") (fun f -> true)
+
 // Targets
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; deployDir]
 )
 
 Target "CopyAppFolder" (fun _ ->
-    CopyDir  (buildDir </> "app") ("redfedora" </> "app") (fun f -> true)
+    copyAppFolder()
 )
 
 Target "Build" (fun _ ->
@@ -44,16 +48,21 @@ Target "Run" (fun _ ->
     let procInf (info:Diagnostics.ProcessStartInfo) =
         info.FileName <- buildDir </> "redfedora.exe"
         info.Arguments <- portNumber.ToString()
-    let res = ExecProcess procInf timeOut
+    //let res = ExecProcess procInf timeOut
+    fireAndForget procInf
+    
     let startPage = sprintf "http://127.0.0.1:%d" portNumber 
     Diagnostics.Process.Start(startPage) |> ignore
+    use watcher = !! "redfedora/app/**/*.*" |> WatchChanges (fun c -> copyAppFolder())
+    System.Console.Read() |> ignore
     ()
 )
 
 
 
 
-"Build" ==> "Run"
+"Build" 
+    ==> "Run"
 
 // Build order
 "Clean"
