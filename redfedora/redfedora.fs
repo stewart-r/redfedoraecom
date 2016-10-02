@@ -29,7 +29,7 @@ let main [| port |] =
     let app : WebPart =
         choose [
             Filters.GET >=> choose [ 
-                    Filters.path "/" >=> Files.file "index.html"
+                    Filters.path "/" >=> Files.file( home +  "index.html")
                     Files.browseHome  ]
             RequestErrors.NOT_FOUND localHome
             ]

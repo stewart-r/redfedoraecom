@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="redfedora.fs" />
-    <Content Include="\app\**">
+    <Content Include="app\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -70,6 +70,12 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
+  <Target Name="BeforeBuild">
+    <ItemGroup>
+        <Content Include="app\*.*" />
+    </ItemGroup>
+  </Target>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0' Or $(TargetFrameworkVersion) == 'v3.5')">
       <ItemGroup>
