@@ -23,11 +23,15 @@ Target "Clean" (fun _ ->
     CleanDirs [buildDir; deployDir]
 )
 
+Target "CopyAppFolder" (fun _ ->
+    CopyDir  (buildDir </> "app") ("redfedora" </> "app") (fun f -> true)
+)
+
 Target "Build" (fun _ ->
     // compile all projects below src/app/
     MSBuildDebug buildDir "Build" appReferences
     |> Log "AppBuild-Output: "
-)
+)   
 
 Target "Deploy" (fun _ ->
     !! (buildDir + "/**/*.*")
@@ -45,13 +49,15 @@ Target "Run" (fun _ ->
     Diagnostics.Process.Start(startPage) |> ignore
     ()
 )
-    
+
+
+
 
 "Build" ==> "Run"
 
-
 // Build order
 "Clean"
+  ==> "CopyAppFolder"
   ==> "Build"
   ==> "Deploy"
 
