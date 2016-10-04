@@ -21,7 +21,7 @@ let buildFromTemplate title body templatePath=
     |> replaceBody body
 
 let index =
-    let template = Home + "_template.html"
+    let template = Path.Combine( Home , "_template.html")
     let ret = buildFromTemplate "Red Fedora" "some body text" template
     ret
 

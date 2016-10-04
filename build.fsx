@@ -19,7 +19,6 @@ let appReferences  =
 let version = "0.1"  // or retrieve from CI server
 
 let copyAppFolder () =
-    System.IO.File.WriteAllText(@"C:\temp\" + Guid.NewGuid().ToString(),DateTime.Now.ToString())
     CopyDir  (buildDir </> "app") ("redfedora" </> "app") (fun f -> true)
 
 // Targets
@@ -44,17 +43,27 @@ Target "Deploy" (fun _ ->
 )
 
 Target "Run" (fun _ -> 
-    let timeOut = TimeSpan.FromMinutes 3.0
-    let procInf (info:Diagnostics.ProcessStartInfo) =
-        info.FileName <- buildDir </> "redfedora.exe"
-        info.Arguments <- portNumber.ToString()
-    //let res = ExecProcess procInf timeOut
-    fireAndForget procInf
     
-    let startPage = sprintf "http://127.0.0.1:%d" portNumber 
-    Diagnostics.Process.Start(startPage) |> ignore
-    use watcher = !! "redfedora/app/**/*.*" |> WatchChanges (fun c -> copyAppFolder())
-    System.Console.Read() |> ignore
+    let mono = isMono
+    let procInf (info:Diagnostics.ProcessStartInfo) =
+        if mono then
+            trace "--mono--"
+            info.FileName <- "mono"
+            info.Arguments <- sprintf "%s %s" (buildDir </> "redfedora.exe") (portNumber.ToString())
+        else
+            info.FileName <- buildDir </> "redfedora.exe"
+            info.Arguments <- portNumber.ToString()
+    if mono then
+        let timeOut = TimeSpan.FromMinutes 30.0
+        ExecProcess procInf timeOut |> ignore
+    else
+        fireAndForget procInf
+        
+        let startPage = sprintf "http://127.0.0.1:%d" portNumber 
+        Diagnostics.Process.Start(startPage) |> ignore
+        use watcher = !! "redfedora/app/**/*.*" |> WatchChanges (fun c -> copyAppFolder())
+        
+        System.Console.Read() |> ignore
     ()
 )
 
