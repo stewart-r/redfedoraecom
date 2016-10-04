@@ -1,0 +1,10 @@
+    {
+        "outDir": "app",
+        "projFile":"app/index.fsx",
+        "sourceMaps": true,
+        "targets": {
+            "production": {
+                "sourceMaps": false
+            }
+        }
+    }
