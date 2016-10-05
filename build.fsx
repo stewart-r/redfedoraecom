@@ -42,6 +42,14 @@ Target "Deploy" (fun _ ->
     |> Zip buildDir (deployDir + "ApplicationName." + version + ".zip")
 )
 
+Target "BuildClientside" (fun _ ->
+    NpmHelper.Npm (fun p ->
+              { p with
+                  Command = (NpmHelper.Run "build")
+                  WorkingDirectory = "./redfedora/"
+              })
+)
+
 Target "Run" (fun _ -> 
     
     let mono = isMono
@@ -75,6 +83,7 @@ Target "Run" (fun _ ->
 
 // Build order
 "Clean"
+  ==> "BuildClientside"
   ==> "CopyAppFolder"
   ==> "Build"
   ==> "Deploy"

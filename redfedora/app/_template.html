@@ -8,7 +8,7 @@
     <title>{title}</title>
 
     <!-- Bootstrap -->
-    <link href="lib/bootstrap.css" rel="stylesheet">
+    <link href="styles/bootstrap.css" rel="stylesheet">
     <link href="styles/site.css" rel = "stylesheet">
   </head>
   <body>
@@ -30,13 +30,14 @@
       
     </nav><!-- /.navbar -->
 
-    <div class="container-fluid container-main" >
+    <div class="container-fluid container-main" ng-app="app">
       <div class="row">
         <div class="col-xs-2 lhs" >
           nav
         </div>
-        <div class="col-xs-7 main-body">
+        <div ng-controller="test as vm" class="col-xs-7 main-body">
           {body}
+          {{vm.Val1}}
         </div>
         <div class="col-xs-3 rhs">
           code
@@ -54,8 +55,5 @@
       </footer>
 
     </div>
-    
-    <script src="lib/jquery.js"></script>
-    <script src="lib/bootstrap.js"></script>
-    <script src="lib/"
+    <script src="lib/bundle.js"></script>
 </html>

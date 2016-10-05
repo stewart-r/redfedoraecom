@@ -1,6 +1,6 @@
     {
-        "outDir": "app",
-        "projFile":"app/index.fsx",
+        "outDir": "clientsrc/js",
+        "projFile":"clientsrc/index.fsx",
         "sourceMaps": true,
         "targets": {
             "production": {
