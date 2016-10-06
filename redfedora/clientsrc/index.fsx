@@ -5,14 +5,24 @@ module App
 
 open Fable.Core
 open Fable.Core.JsInterop
-open AngularFable.NgFable
 
-let app = AngularFable.NgFable.angular.``module`` "app" [||] 
+
+let app = AngularFable.NgFable.angular.``module``("app",[||])
 
 type TestCtrl() = 
+    
     member this.Val1() = "boom";
 
+let f1 () = 
+    1
 
+let someRefTof1 = f1
 
-app?controller("test", TestCtrl)
+let f2 f (x:int) = 
+    let a = f()
+    a * a
+
+let value1 = f2 f1 1
+
+//app?controller("test", t2)
 
