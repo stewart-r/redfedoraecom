@@ -1,9 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
-exports.value1 = exports.someRefTof1 = exports.TestCtrl = exports.app = undefined;
-exports.f1 = f1;
-exports.f2 = f2;
+exports.TestCtrl = exports.app = undefined;
 
 var _angular = require("angular");
 
@@ -31,20 +29,5 @@ var TestCtrl = exports.TestCtrl = function () {
 
 _fableCore.Util.setInterfaces(TestCtrl.prototype, [], "App.TestCtrl");
 
-    function f1() {
-        return 1;
-    }
-
-    var someRefTof1 = exports.someRefTof1 = function someRefTof1(arg00_) {
-        return f1(arg00_);
-    };
-
-function f2(f, x) {
-    var a = f();
-    return a * a;
-}
-
-var value1 = exports.value1 = f2(function (arg00_) {
-    return f1(arg00_);
-}, 1);
+app.controller("test", TestCtrl);
 //# sourceMappingURL=index.js.map
