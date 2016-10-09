@@ -4,13 +4,21 @@ open Fable.Import
 open System
 
 module NgFable =
+    type IDirective = 
+        abstract member restrict :string with get,set
+        
+        
+    type IAngularApp =
+        abstract member directive : name:string * fn:(unit -> IDirective)  -> IDirective
+        abstract member controller : name:string * dependencies:array<obj> -> obj
     
     type IAngularStatic = 
-        // abstract member ``module``() name:string -> ?requires:array<string> -> ?fn:obj -> obj
-        abstract member ``module`` : name:string * ?requires:array<string> * ?fn:obj -> int
+        abstract member ``module`` : name:string * ?requires:array<string> * ?fn:obj -> IAngularApp
         
 
     [<Import("*","angular")>]    
     let angular :IAngularStatic = jsNative
+    
+
     
 

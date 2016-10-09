@@ -22,7 +22,8 @@
   "licence": "MIT",
   "devDependencies": {
     "browserify": "^13.1.0",
-    "fable-compiler": "^0.6.11",
+    "fable": "^1.0.1",
+    "fable-compiler": "^0.6.12",
     "rimraf": "^2.5.4"
   }
 }

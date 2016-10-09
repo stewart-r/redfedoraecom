@@ -5,27 +5,41 @@ module App
 
 open Fable.Core
 open Fable.Core.JsInterop
+open AngularFable.NgFable
 open Microsoft.FSharp.Quotations
 
+//Angular App
 let app = AngularFable.NgFable.angular.``module``("app",[||])
 
-type TestCtrl() =
-    
+//Angular Controller
+type TestCtrl(http) =
+    let mutable str = "not retrieved yet" 
+    member this.Http = http
     member this.Val1() = "boom";
+    member this.Val2() = str;
 
+    member this.Fetch() = 
+        this.Http
+            ?get("/api/ss")
+            ?``then``(fun r -> str <- (r?data.ToString()))
+
+    //CTOR & dependencies. (in typescript these would be injected through $inject service but this requires js decorator support)
+    static member Factory:array<obj> = [|"$http"; TestCtrl.GetInstance|]
+    static member GetInstance (http) = 
+        TestCtrl(http)
+
+//Angular directive
+type TestDirective() =
     
-    [<Emit("TestCtrl")>]
-    static member Factory () = 
-        TestCtrl()
+    member val template = "<b>Im coming from the directive!</b>" with get, set
 
-// let f1 () =  
-//     1
+    interface IDirective with 
+        member val restrict = "EA" with get, set
 
-// let f2 = System.Func<int>(fun _ -> 1)
-
-// let someRefTof1:unit -> int = f1
+    static member Factory:array<obj> = [|"",TestCtrl.GetInstance|]
+    static member GetInstance() = TestDirective() :> IDirective
 
 
-
-app?controller("test", TestCtrl.Factory())
+app.controller("test",TestCtrl.Factory)
+app.directive("testDirective",TestDirective.GetInstance)
 
