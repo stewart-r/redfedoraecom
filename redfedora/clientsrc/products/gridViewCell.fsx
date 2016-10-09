@@ -24,7 +24,7 @@ type GridCellCtrl(scope:IProductScope) =
     static member Factory:array<obj> = [|"$scope"; GridCellCtrl.GetInstance|]
     static member GetInstance (scope:IProductScope) = 
         let ret = GridCellCtrl(scope)
-        ret.Scope.product <- Product("My Title","My Description")
+        //ret.Scope.product <- Product("My Title","My Description","https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS6CmRDXEWsVbQ7xwJV1fj7Bci_WxMAsj2nwxglWu-SG5K8dFjbCsE8ss4")
         ret
 
 

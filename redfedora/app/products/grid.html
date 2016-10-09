@@ -1,0 +1,12 @@
+<div ng-controller="gridCtrl as vm">
+    
+    <div class="container tablecont table table-bordered">
+        <div class="tablerow" ng-repeat="row in vm.rows()">
+            <div class="col-xs-4" ng-repeat="prod in row">
+                <div ng-controller="gridCellCtrl as gc">
+                    <grid-cell ng-model="prod"></grid-cell>
+                </div>
+            </div>
+        </div>
+    </table>
+</div>

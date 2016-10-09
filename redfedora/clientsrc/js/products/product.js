@@ -10,11 +10,12 @@ var _fableCore = require("fable-core");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Product = exports.Product = function () {
-    function Product(title, desc) {
+    function Product(title, desc, imgUrl) {
         _classCallCheck(this, Product);
 
         this.title = title;
         this.desc = desc;
+        this.imgUrl = imgUrl;
     }
 
     _createClass(Product, [{
@@ -26,6 +27,11 @@ var Product = exports.Product = function () {
         key: "Description",
         get: function get() {
             return this.desc;
+        }
+    }, {
+        key: "imageUrl",
+        get: function get() {
+            return this.imgUrl;
         }
     }]);
 

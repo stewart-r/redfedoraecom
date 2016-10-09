@@ -7,8 +7,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _fableCore = require("fable-core");
 
-var _product = require("./product");
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GridCellDirective = exports.GridCellDirective = function () {
@@ -62,7 +60,6 @@ var GridCellCtrl = exports.GridCellCtrl = function () {
 
     GridCellCtrl.GetInstance = function GetInstance(scope) {
         var ret = new GridCellCtrl(scope);
-        ret.Scope.product = new _product.Product("My Title", "My Description");
         return ret;
     };
 
