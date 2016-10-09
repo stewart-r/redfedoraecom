@@ -26,11 +26,13 @@ let main [| port |] =
     let webApi = WebApi config
     let webApp = WebApp config
     
-    let app () = 
-        choose[
-            Filters.pathStarts "/api" >=> (webApi ())
-            Filters.GET >=> webApp
-        ]
+    let app =
+        request (fun r -> 
+                choose[
+                    Filters.pathStarts "/api" >=> (webApi ())
+                    Filters.GET >=> webApp
+                ]
+            ) 
 
     // let app : WebPart =
         
@@ -40,5 +42,5 @@ let main [| port |] =
     //                 Filters.path "/api/" >=> api]
     //         RequestErrors.NOT_FOUND localHome
     //         ]
-    startWebServer config (app ())
+    startWebServer config app
     0 // return an integer exit code

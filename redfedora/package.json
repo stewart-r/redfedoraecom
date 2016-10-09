@@ -12,7 +12,7 @@
   "scripts": {
     "fable": "fable",
     "compile": "npm run fable",
-    "precompile": "npm run clean",
+    "precompile": "npm run clean && npm install",
     "clean": "rimraf app/lib/*",
     "prebuild": "npm run compile",
     "build": "npm run build:bundle",
