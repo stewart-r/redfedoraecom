@@ -2,88 +2,62 @@
 "use strict";
 
 exports.__esModule = true;
-exports.TestDirective = exports.TestCtrl = exports.app = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.app = undefined;
 
 var _angular = require("angular");
 
 var angular = _interopRequireWildcard(_angular);
 
-var _fableCore = require("fable-core");
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var app = exports.app = angular.module("app", []);
 
-var TestCtrl = exports.TestCtrl = function () {
-    function TestCtrl(http) {
-        _classCallCheck(this, TestCtrl);
+},{"angular":6}],2:[function(require,module,exports){
+"use strict";
 
-        this.http = http;
-        this.str = "not retrieved yet";
-    }
+var _app = require("./app");
 
-    TestCtrl.prototype.Val1 = function Val1() {
-        return "boom";
-    };
+var _gridViewCell = require("./products/gridViewCell");
 
-    TestCtrl.prototype.Val2 = function Val2() {
-        return this.str;
-    };
+_app.app.controller("gridCellCtrl", _gridViewCell.GridCellCtrl.Factory);
 
-    TestCtrl.prototype.Fetch = function Fetch() {
-        var _this = this;
+_app.app.directive("gridCell", function () {
+  return _gridViewCell.GridCellDirective.GetInstance();
+});
 
-        return this.Http.get("/api/ss").then(function (r) {
-            _this.str = _fableCore.Util.toString(r.data);
-        });
-    };
+},{"./app":1,"./products/gridViewCell":3}],3:[function(require,module,exports){
+"use strict";
 
-    TestCtrl.GetInstance = function GetInstance(http) {
-        return new TestCtrl(http);
-    };
+exports.__esModule = true;
+exports.GridCellCtrl = exports.GridCellDirective = undefined;
 
-    _createClass(TestCtrl, [{
-        key: "Http",
-        get: function get() {
-            return this.http;
-        }
-    }], [{
-        key: "Factory",
-        get: function get() {
-            return ["$http", function (arg00) {
-                return TestCtrl.GetInstance(arg00);
-            }];
-        }
-    }]);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    return TestCtrl;
-}();
+var _fableCore = require("fable-core");
 
-_fableCore.Util.setInterfaces(TestCtrl.prototype, [], "App.TestCtrl");
+var _product = require("./product");
 
-var TestDirective = exports.TestDirective = function () {
-    function TestDirective() {
-        _classCallCheck(this, TestDirective);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-        this["template@"] = "<b>Im coming from the directive!</b>";
+var GridCellDirective = exports.GridCellDirective = function () {
+    function GridCellDirective() {
+        _classCallCheck(this, GridCellDirective);
+
+        this["templateUrl@"] = "products/gridCell.html";
         this["restrict@"] = "EA";
     }
 
-    TestDirective.GetInstance = function GetInstance() {
-        return new TestDirective();
+    GridCellDirective.GetInstance = function GetInstance() {
+        return new GridCellDirective();
     };
 
-    _createClass(TestDirective, [{
-        key: "template",
+    _createClass(GridCellDirective, [{
+        key: "templateUrl",
         get: function get() {
-            return this["template@"];
+            return this["templateUrl@"];
         },
         set: function set(v) {
-            this["template@"] = v;
+            this["templateUrl@"] = v;
         }
     }, {
         key: "restrict",
@@ -96,23 +70,90 @@ var TestDirective = exports.TestDirective = function () {
     }], [{
         key: "Factory",
         get: function get() {
-            return [["", function (arg00) {
-                return TestCtrl.GetInstance(arg00);
+            return [["", function () {
+                return GridCellDirective.GetInstance();
             }]];
         }
     }]);
 
-    return TestDirective;
+    return GridCellDirective;
 }();
 
-_fableCore.Util.setInterfaces(TestDirective.prototype, ["AngularFable.NgFable.IDirective"], "App.TestDirective");
+_fableCore.Util.setInterfaces(GridCellDirective.prototype, ["AngularFable.NgFable.IDirective"], "GridCellView.GridCellDirective");
 
-app.controller("test", TestCtrl.Factory);
-app.directive("testDirective", function () {
-    return TestDirective.GetInstance();
-});
+var GridCellCtrl = exports.GridCellCtrl = function () {
+    function GridCellCtrl(scope) {
+        _classCallCheck(this, GridCellCtrl);
 
-},{"angular":3,"fable-core":4}],2:[function(require,module,exports){
+        this["Scope@"] = scope;
+    }
+
+    GridCellCtrl.GetInstance = function GetInstance(scope) {
+        var ret = new GridCellCtrl(scope);
+        ret.Scope.product = new _product.Product("My Title", "My Description");
+        return ret;
+    };
+
+    _createClass(GridCellCtrl, [{
+        key: "Scope",
+        get: function get() {
+            return this["Scope@"];
+        },
+        set: function set(v) {
+            this["Scope@"] = v;
+        }
+    }], [{
+        key: "Factory",
+        get: function get() {
+            return ["$scope", function (arg00) {
+                return GridCellCtrl.GetInstance(arg00);
+            }];
+        }
+    }]);
+
+    return GridCellCtrl;
+}();
+
+_fableCore.Util.setInterfaces(GridCellCtrl.prototype, [], "GridCellView.GridCellCtrl");
+
+},{"./product":4,"fable-core":7}],4:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+exports.Product = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _fableCore = require("fable-core");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Product = exports.Product = function () {
+    function Product(title, desc) {
+        _classCallCheck(this, Product);
+
+        this.title = title;
+        this.desc = desc;
+    }
+
+    _createClass(Product, [{
+        key: "Title",
+        get: function get() {
+            return this.title;
+        }
+    }, {
+        key: "Description",
+        get: function get() {
+            return this.desc;
+        }
+    }]);
+
+    return Product;
+}();
+
+_fableCore.Util.setInterfaces(Product.prototype, [], "Product.Product");
+
+},{"fable-core":7}],5:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -31881,11 +31922,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],3:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":2}],4:[function(require,module,exports){
+},{"./angular":5}],7:[function(require,module,exports){
 (function (global){
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
@@ -36501,4 +36542,4 @@ module.exports = angular;
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[1]);
+},{}]},{},[2]);

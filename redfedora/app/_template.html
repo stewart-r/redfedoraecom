@@ -35,16 +35,9 @@
         <div class="col-xs-2 lhs" >
           nav
         </div>
-        <div ng-controller="test as vm" class="col-xs-7 main-body">
-          <h4>Simple controller examples</h4>
-          val1: {{vm.Val1()}}
-          <br>
-          From Server: {{vm.Val2()}}
-          <br>
-          <button ng-click="vm.Fetch()">fetch timestamp</button>
-
-          <h4>Custom Directive:</h4>
-          <test-directive></test-directive>
+        <div ng-controller="gridCellCtrl as vm" class="col-xs-7 main-body">
+          <grid-cell></grid-cell>
+          
         </div>
         <div class="col-xs-3 rhs">
           code
