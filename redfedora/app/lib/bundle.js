@@ -2,6 +2,41 @@
 "use strict";
 
 exports.__esModule = true;
+exports.NgFable = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _fableCore = require("fable-core");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var NgFable = exports.NgFable = function ($exports) {
+    var NgModelMap = $exports.NgModelMap = function () {
+        function NgModelMap(mapType) {
+            _classCallCheck(this, NgModelMap);
+
+            this.mapType = mapType;
+        }
+
+        _createClass(NgModelMap, [{
+            key: "ngModel",
+            get: function get() {
+                return this.mapType;
+            }
+        }]);
+
+        return NgModelMap;
+    }();
+
+    _fableCore.Util.setInterfaces(NgModelMap.prototype, [], "AngularFable.NgFable.NgModelMap");
+
+    return $exports;
+}({});
+
+},{"fable-core":9}],2:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
 exports.app = undefined;
 
 var _angular = require("angular");
@@ -12,7 +47,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var app = exports.app = angular.module("app", []);
 
-},{"angular":7}],2:[function(require,module,exports){
+},{"angular":8}],3:[function(require,module,exports){
 "use strict";
 
 var _app = require("./app");
@@ -33,7 +68,7 @@ _app.app.directive("grid", function () {
   return _grid.GridDirective.GetInstance();
 });
 
-},{"./app":1,"./products/grid":3,"./products/gridViewCell":4}],3:[function(require,module,exports){
+},{"./app":2,"./products/grid":4,"./products/gridViewCell":5}],4:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -145,13 +180,15 @@ var GridCtrl = exports.GridCtrl = function () {
 
 _fableCore.Util.setInterfaces(GridCtrl.prototype, [], "GridView.GridCtrl");
 
-},{"./product":5,"fable-core":8}],4:[function(require,module,exports){
+},{"./product":6,"fable-core":9}],5:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
 exports.GridCellCtrl = exports.GridCellDirective = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _angularFable = require("./../angularFable");
 
 var _fableCore = require("fable-core");
 
@@ -162,6 +199,8 @@ var GridCellDirective = exports.GridCellDirective = function () {
         _classCallCheck(this, GridCellDirective);
 
         this["templateUrl@"] = "products/gridCell.html";
+        this["scope@"] = {ngModel: "="};
+        this["replace@"] = true;
         this["restrict@"] = "EA";
     }
 
@@ -176,6 +215,19 @@ var GridCellDirective = exports.GridCellDirective = function () {
         },
         set: function set(v) {
             this["templateUrl@"] = v;
+        }
+    }, {
+        key: "scope",
+        get: function get() {
+            return this["scope@"];
+        }
+    }, {
+        key: "replace",
+        get: function get() {
+            return this["replace@"];
+        },
+        set: function set(v) {
+            this["replace@"] = v;
         }
     }, {
         key: "restrict",
@@ -233,7 +285,7 @@ var GridCellCtrl = exports.GridCellCtrl = function () {
 
 _fableCore.Util.setInterfaces(GridCellCtrl.prototype, [], "GridCellView.GridCellCtrl");
 
-},{"fable-core":8}],5:[function(require,module,exports){
+},{"./../angularFable":1,"fable-core":9}],6:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -276,7 +328,7 @@ var Product = exports.Product = function () {
 
 _fableCore.Util.setInterfaces(Product.prototype, [], "Product.Product");
 
-},{"fable-core":8}],6:[function(require,module,exports){
+},{"fable-core":9}],7:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -32045,11 +32097,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":6}],8:[function(require,module,exports){
+},{"./angular":7}],9:[function(require,module,exports){
 (function (global){
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
@@ -36665,4 +36717,4 @@ module.exports = angular;
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[2]);
+},{}]},{},[3]);

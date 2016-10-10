@@ -11,9 +11,13 @@ open Product
 type GridCellDirective() =
     
     member val templateUrl = "products/gridCell.html" with get, set
+    member val scope = NgModelMap("=")
+    member val replace = true with get, set
 
     interface IDirective with 
         member val restrict = "EA" with get, set
+        
+
 
     static member Factory:array<obj> = [|"",GridCellDirective.GetInstance|]
     static member GetInstance() = GridCellDirective() :> IDirective

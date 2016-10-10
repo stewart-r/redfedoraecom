@@ -5,6 +5,8 @@ exports.GridCellCtrl = exports.GridCellDirective = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _angularFable = require("./../angularFable");
+
 var _fableCore = require("fable-core");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14,6 +16,8 @@ var GridCellDirective = exports.GridCellDirective = function () {
         _classCallCheck(this, GridCellDirective);
 
         this["templateUrl@"] = "products/gridCell.html";
+        this["scope@"] = {ngModel: "="};
+        this["replace@"] = true;
         this["restrict@"] = "EA";
     }
 
@@ -28,6 +32,19 @@ var GridCellDirective = exports.GridCellDirective = function () {
         },
         set: function set(v) {
             this["templateUrl@"] = v;
+        }
+    }, {
+        key: "scope",
+        get: function get() {
+            return this["scope@"];
+        }
+    }, {
+        key: "replace",
+        get: function get() {
+            return this["replace@"];
+        },
+        set: function set(v) {
+            this["replace@"] = v;
         }
     }, {
         key: "restrict",

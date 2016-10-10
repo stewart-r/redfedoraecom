@@ -4,11 +4,17 @@ open Fable.Import
 open System
 
 module NgFable =
+
+    
+    type NgModelMap(mapType:string) = 
+        member this.ngModel = mapType 
+    
     type IScope = 
         abstract member ``$parent``:IScope with get,set
 
     type IDirective = 
         abstract member restrict :string with get,set
+        
         
         
     type IAngularApp =
