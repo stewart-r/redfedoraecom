@@ -16,7 +16,7 @@ var GridCellDirective = exports.GridCellDirective = function () {
         _classCallCheck(this, GridCellDirective);
 
         this["templateUrl@"] = "products/gridCell.html";
-        this["scope@"] = {ngModel: "="};
+        this["scope@"] = new _angularFable.NgFable.NgModelMap("=");
         this["replace@"] = true;
         this["restrict@"] = "EA";
     }
